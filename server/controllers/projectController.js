@@ -36,7 +36,7 @@ projectController.getAll = (req,res)=>{
         //creator in order to populate further information such as the usernamer etc
         path: '_creator',
         //the -_id removes the id field from the postman api pull 
-    select: 'username createdAt -_id'}).populate({  //you can chain these functions
+        select: 'username createdAt -_id'}).populate({  //you can chain these functions
         //populates must be a path & select combo. 
         path: '_comments', //we only need the text here as the middleware
         //we implemented automatically extracts the _user from the id 

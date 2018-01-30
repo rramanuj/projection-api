@@ -1,15 +1,15 @@
 import db from './../models';
 
-const commentController = {};
+const teamController = {};
 
-commentController.post = (req,res) => {
+teamController.post = (req,res) => {
     const {text, userId, postId} = req.body;
     console.log(req.body);
     //pulls from our request body.
 
     //Validation
     //user cursor, we can create a new instance of this model
-    const comment = new db.Comment({
+    const comment = new db.Team({
         text,
         _creator: userId,
         _post: postId
@@ -36,5 +36,5 @@ commentController.post = (req,res) => {
     });
 });
 }
-export default commentController;
+export default teamController;
 

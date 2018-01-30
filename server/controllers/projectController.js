@@ -7,6 +7,7 @@ projectController.post= (req,res) => {
         title,
         text,
         link,
+        team,
         userId //token
     } = req.body;
 //validation is required, either text or link not both. 
@@ -15,6 +16,7 @@ projectController.post= (req,res) => {
         title,
         text,
         link,
+        team,
         _creator: userId,       //since the property name is difeferent we need to specificy the 
                                 ///parameter name.
     });
@@ -31,6 +33,8 @@ projectController.post= (req,res) => {
 };
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
+
+
 projectController.getAll = (req,res)=>{
     db.Project.find({}).populate({ //populate function uses the reference
         //creator in order to populate further information such as the usernamer etc
@@ -41,6 +45,9 @@ projectController.getAll = (req,res)=>{
         path: '_comments', //we only need the text here as the middleware
         //we implemented automatically extracts the _user from the id 
         select: 'text',
+        path: 'team', //we only need the text here as the middleware
+        //we implemented within the respective controller file automatically extracts the _user from the id.
+        select: 'name -_id',
         match: {'isDeleted': false}}).then((projects) => {
         return res.status(200).json({
             success:true,

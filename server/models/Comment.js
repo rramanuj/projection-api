@@ -13,13 +13,12 @@ const commentSchema = new Schema({
    _post: {type: Schema.ObjectId, ref: 'Post'}  //references the post.
 });
 
-
 const autoPopulateCreator = function(next) {
     this.populate ({
         path: '_creator',
         select: 'username createdAt -_id'
     });
-next();
+next(); 
 };
 
 //autopopulates when this is mentioned, this works similiar to a 'didSet' in Swift. This ties the 

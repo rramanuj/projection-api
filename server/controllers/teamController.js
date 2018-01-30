@@ -26,6 +26,37 @@ teamController.post = (req,res) => {
         });
     });
 }
+
+teamController.addMember = (req,res) => {  
+    const {userId,teamId} = req.body;
+    console.log(req.body);
+    //pulls from our request body.
+
+    //Validation
+    //user cursor, we can create a new instance of this model
+    
+    //update
+    db.Team.findByIdAndUpdate(teamId,
+        { $push: {'_members': userId} }
+        ).then((newUser) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: newUser,
+        });
+    //tries to save it.
+   /* team.save().then((newTeam)=>{
+        res.status(200).json({
+            success: true,
+            data: newTeam
+        });*/
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+}
+
 teamController.getAll = (req,res)=>{
     db.Team.find({}).populate({ //populate function uses the reference
         //creator in order to populate further information such as the usernamer etc

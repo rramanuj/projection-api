@@ -7,12 +7,13 @@ mongoose.Promise = global.Promise;
 //first instance of our schema, this is for the user accounts.
 const projectSchema = new Schema({
    title: {type: String, required: true},
+   team: {type: Schema.ObjectId, ref: 'Team'},
    link: String,
    text: String,
    isDeleted: {type: Boolean, default: false},
-   createdAt: {type: Date, default: Date.now},
+   createdAt: {type: Date, default: Date.now},  //
    _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
-   _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ]
+   _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ] 
    //array to hold all the comments pertaining to a specific post
 });
 

@@ -21,5 +21,5 @@ routes.post('/newproject', projectController.post);
 routes.post('/newteam', teamController.post);
 routes.get('/projects', projectController.getAll); //not single
 routes.post('/comment', commentController.post); //post comments to a project
-routes.get('/teams', teamController.getAll);
+routes.put('/addTeamMember', teamController.addMember);
 export default routes;

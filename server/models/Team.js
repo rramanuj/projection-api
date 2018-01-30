@@ -29,7 +29,7 @@ next();
 //is generated 
 teamSchema.pre('find', autoPopulateCreator)
 //searches for the user within the comment, and automatically populates the username and created at 
-const Comment = mongoose.model('Comment', teamSchema);
-export default Comment;
+const Team = mongoose.model('Team', teamSchema);
+export default Team;
 
 

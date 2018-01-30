@@ -1,7 +1,7 @@
 import User from './../models/user';
 import Project from './Project';
-import Comment from './Comment'
-
+import Comment from './Comment';
+import Team from './Team'
 //instead of having to import 3 or 4 models, we can just import the index file and have
 //access to all the models
 
@@ -9,6 +9,7 @@ import Comment from './Comment'
 export default {
     User,
     Project,
-    Comment, 
+    Comment,
+    Team,
 }; 
 

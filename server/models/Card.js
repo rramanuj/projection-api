@@ -6,12 +6,15 @@ mongoose.Promise = global.Promise;
 
 //first instance of our schema, this is for the cards..
 const cardSchema = new Schema({
-   text: {type: String, required: true},
-   owner: {type: Boolean, default: true},  
+   title: {type: String, required: true},
+   description: {type: String, required: true},
+   board: {type: String, required: true}, //board
    deadline: {type: Date, required: true},
-   createdAt: {type: Date, default: Date.now},
+   createdAt: {type: Date, default: Date.now}, 
+   isDeleted: {type: Boolean, default: false},
+   _owner: {type: Schema.ObjectId, ref: 'User'}, //references to the the action user, the person the card is assigned to..
    _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
-   _post: {type: Schema.ObjectId, ref: 'Post'},  //references the post.
+   _project: {type: Schema.ObjectId, ref: 'Project'},  //references the project.
    _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ] 
 });
 

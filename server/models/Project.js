@@ -13,7 +13,6 @@ const projectSchema = new Schema({
    isDeleted: {type: Boolean, default: false},
    createdAt: {type: Date, default: Date.now},  //
    _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
-   _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ] 
    //array to hold all the comments pertaining to a specific post
 });
 

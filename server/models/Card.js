@@ -21,8 +21,13 @@ const cardSchema = new Schema({
 const autoPopulateCreator = function(next) {
     this.populate ({
         path: '_creator',
-        select: 'username createdAt -_id'
-    });
+        select: 'username -_id'
+    }).populate ({
+        path: '_project',
+        select: 'title'
+    }).populate({
+        path: '_comments',
+        select: 'text userId createdAt -_id'})  //you can chain these functions*/;
 next(); 
 };
 

@@ -7,6 +7,8 @@ teamController.post = (req,res) => {
     console.log(req.body);
     //pulls from our request body.
 
+
+    
     //Validation
     //user cursor, we can create a new instance of this model
     const team = new db.Team({

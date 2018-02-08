@@ -13,10 +13,13 @@ const commentSchema = new Schema({
    _card: {type: Schema.ObjectId, ref: 'Card'}  //references the post.
 });
 
+
+
+//we use this so we don't have to constantly call this function each time !!
 const autoPopulateCreator = function(next) {
     this.populate ({
         path: '_creator',
-        select: 'username createdAt -_id'
+        select: 'username -_id'
     });
 next(); 
 };

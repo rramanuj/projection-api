@@ -46,20 +46,18 @@ cardController.post= (req,res) => {
 cardController.getAll = (req,res)=>{
     db.Card.find({}).populate({ //populate function uses the reference
         //creator in order to populate further information such as the usernamer etc
-        path: '_creator',
+       // path: '_creator',
         //the -_id removes the id field from the postman api pull 
-        select: 'username createdAt -_id'}).populate({  //you can chain these functions
+        //select: 'username createdAt -_id'}).populate({  //you can chain these functions
         //populates must be a path & select combo. 
         /*path: '_comments', //we only need the text here as the middleware
         //we implemented automatically extracts the _user from the id 
         select: 'text',*/
-        path: '_comments',
-        select: 'text userId -_id'}).populate({  //you can chain these functions
+        /*path: '_comments',
+        select: 'text userId createdAt -_id'}).populate({  //you can chain these functions*/
+    
         path: '_owner',
-        select: 'username -_id'}).populate({
-        
-        path: '_project',
-        select: 'title description -_id',
+        select: 'username -_id',
 
             // select: 'username -_id', //gets the username and deletes the ID
         match: {'isDeleted': false}}).then((cards) => {

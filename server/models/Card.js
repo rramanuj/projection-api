@@ -4,14 +4,15 @@ const { Schema } = mongoose;
 mongoose.Promise = global.Promise;
 //at some point I will do this
 
-//first instance of our schema, this is for the user accounts.
+//first instance of our schema, this is for the cards..
 const cardSchema = new Schema({
    text: {type: String, required: true},
    owner: {type: Boolean, default: true},  
    deadline: {type: Date, required: true},
    createdAt: {type: Date, default: Date.now},
    _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
-   _post: {type: Schema.ObjectId, ref: 'Post'}  //references the post.
+   _post: {type: Schema.ObjectId, ref: 'Post'},  //references the post.
+   _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ] 
 });
 
 const autoPopulateCreator = function(next) {

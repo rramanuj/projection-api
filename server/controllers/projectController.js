@@ -16,7 +16,7 @@ projectController.post= (req,res) => {
         title,
         text,
         link,
-        team,
+        _team:team,
         _creator: userId,       //since the property name is difeferent we need to specificy the 
                                 ///parameter name.
     });
@@ -33,7 +33,29 @@ projectController.post= (req,res) => {
 };
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
+projectController.addMember = (req,res) => {  
+    const {userId, projectId} = req.body;
+    console.log(req.body);
+    //pulls from our request body.
 
+    //Validation
+    //user cursor, we can create a new instance of this model
+    
+    //update
+    db.Project.findByIdAndUpdate(projectId,
+        { $push: {'_team': userId} }
+        ).then((newMember) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: newMember,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+}
 
 projectController.getAll = (req,res)=>{
     db.Project.find({}).populate({ //populate function uses the reference
@@ -58,5 +80,7 @@ projectController.getAll = (req,res)=>{
             message: err
         });
     })
+
+
 }
 export default projectController;

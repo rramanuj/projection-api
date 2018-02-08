@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 //first instance of our schema, this is for the user accounts.
 const projectSchema = new Schema({
    title: {type: String, required: true},
-   team: {type: Schema.ObjectId, ref: 'Team'},
+   _team: [ {type: Schema.ObjectId, ref: 'User'}],
    link: String,
    text: String,
    isDeleted: {type: Boolean, default: false},
@@ -16,6 +16,23 @@ const projectSchema = new Schema({
    //array to hold all the comments pertaining to a specific post
 });
 
+
+const autoPopulateCreator = function(next) {
+    this.populate ({
+        path: '_team',
+        select: 'username -_id '
+    });
+next(); 
+};
+
+
+//This Pre function serves 2 purposes: 
+// 1. As with the other models, it pre populates the user ID with the user name
+// 2. It automatically sets the first person in the team member to be the person who created the team.
+projectSchema.pre('find', autoPopulateCreator).pre('save', function (next) {
+    this._team = this.get('_creator'); // considering _id is input by client
+    next();
+});
 
 const Project = mongoose.model('Project', projectSchema);
 export default Project;

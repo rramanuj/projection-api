@@ -26,5 +26,5 @@ routes.get('/projects', projectController.getAll); //not single
 routes.post('/comment', commentController.post); //post comments to a project
 routes.put('/addTeamMember', teamController.addMember);
 routes.put('/editComment', commentController.editComment);
-
+routes.put('/editCard', cardController.editCard);
 export default routes;

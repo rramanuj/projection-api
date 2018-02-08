@@ -42,6 +42,26 @@ cardController.post= (req,res) => {
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
 
+cardController.editCard = (req,res) => {  
+    const {_id, title, description, userId,deadline,isDeleted} = req.body;
+    console.log(req.body);
+    //pulls from our request body.
+    //update
+    db.Card.findByIdAndUpdate({_id,"title description ,userId,deadline,isDeleted":{$exists:true}},
+        { $set: {title, description,userId,deadline,isDeleted} }
+        ).then((updatedCard) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: updatedCard,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+}
+
 
 cardController.getAll = (req,res)=>{
     db.Card.find({}).populate({ //populate function uses the reference

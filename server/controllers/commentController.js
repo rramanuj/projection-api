@@ -3,7 +3,7 @@ import db from './../models';
 const commentController = {};
 
 commentController.post = (req,res) => {
-    const {text, userId, postId} = req.body;
+    const {text, userId, cardId} = req.body;
     console.log(req.body);
     //pulls from our request body.
 
@@ -12,11 +12,11 @@ commentController.post = (req,res) => {
     const comment = new db.Comment({
         text,
         _creator: userId,
-        _post: postId
+        _card: cardId
     });
     //tries to save it.
     comment.save().then((newComment)=>{
-    db.Post.findByIdAndUpdate(postId,
+    db.Card.findByIdAndUpdate(cardId,
         { $push: {'_comments': newComment._id} }
         ).then((exisitingPost) => {
         res.status(200).json({

@@ -35,7 +35,7 @@ projectController.post= (req,res) => {
 //team can then be assigned to an action within a project involving that team.
 projectController.addMember = (req,res) => {  
     const {userId, projectId} = req.body;
-    console.log(req.body);
+    
     //pulls from our request body.
 
     //Validation
@@ -44,6 +44,22 @@ projectController.addMember = (req,res) => {
     //update
     db.Project.findByIdAndUpdate(projectId,
         { $push: {'_team': userId} }
+        ).then((newMember) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: newMember,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+}
+projectController.removeMember = (req,res) => {
+    const {userId, projectId} = req.body;
+    db.Project.findByIdAndUpdate(projectId,
+        { $pull: {'_team': userId} }
         ).then((newMember) => {
         res.status(200).json({
             success: true,
@@ -80,7 +96,5 @@ projectController.getAll = (req,res)=>{
             message: err
         });
     })
-
-
 }
 export default projectController;

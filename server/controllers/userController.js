@@ -1,6 +1,6 @@
 import db from './../models';
-
 const userController = {};
+
 
 userController.post = (req,res) => {
     const {username, password} = req.body;
@@ -22,8 +22,8 @@ userController.post = (req,res) => {
             data: newUser,
         });
     }).catch((err)=>{       //throws err if not 
-        res.status(500).json ({
-            message: err,
+          res.status(400).send ({
+           error: err,
         });
     });
 }

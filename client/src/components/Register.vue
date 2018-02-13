@@ -6,16 +6,20 @@
       <v-toolbar-title>Register</v-toolbar-title>
     </v-toolbar>
  
-  <div class ="pl4 pr-4 pt-2 pb-2"
-    <input type ="email" name ="email" placeholder="email" v-model="email"/>
+  <div class="pl-4 pr-4 pt-2 pb-2">
+      <v-text-field label="Username" v-model="email"></v-text-field>
+   <!-- <input type ="email" name ="email" placeholder="email" v-model="email"/>-->
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
-     <input type ="password" name ="password" placeholder="password" v-model="password"/>
+      <v-text-field
+          label="Password" v-model="password"
+        ></v-text-field>
+    <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>
      <div class="error" v-html="error"/>
      <!--this says on @click, execute the method 'register' which i've defined below-->
-     <v-btn @click="register">Register</v-btn>
-
+     <v-btn @click dark="register">Register</v-btn>
+  </div>
  </div>
   </v-flex>
 </v-layout>
@@ -65,6 +69,8 @@ fires a click event, it does the method associated.-->
 .error {
   color:red; 
 }
+
+
 </style>   
   <!-- calls the end point, pass it email and password, wait for a response, and opnce we get
 the response we print out the data.-->

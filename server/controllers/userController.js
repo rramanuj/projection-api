@@ -14,7 +14,7 @@ userController.post = (req,res) => {
         password
     });
 
-
+    
     //tries to save it.
     user.save().then((newUser)=>{
         res.status(200).json({      //if it does it does this
@@ -27,5 +27,20 @@ userController.post = (req,res) => {
         });
     });
 }
+    userController.getAll = (req,res)=>{
+        db.User.find({})//populate function uses the reference
+            //creator in order to populate further information such as the usernamer etc
+            .then((User) => {
+            return res.status(200).json({
+                success:true,
+                data:User
+            });
+        }).catch((err) => {
+            return res.status(500).json({
+                message: err
+            });
+        });
+    }
+    
 export default userController;
 

@@ -15,6 +15,7 @@ routes.get('/', basicController.get);
 
 //User Routes
 routes.post('/signup', userController.post);
+routes.get('/users', userController.getAll);
 
 //Project Routes
 routes.post('/newproject', projectController.post);

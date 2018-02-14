@@ -18,7 +18,7 @@
      <br>
      <div class="error" v-html="error"/>
      <!--this says on @click, execute the method 'register' which i've defined below-->
-     <v-btn @click dark="register">Register</v-btn>
+     <v-btn @click="register" dark>Register</v-btn>
   </div>
  </div>
   </v-flex>

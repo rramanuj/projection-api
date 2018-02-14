@@ -16,7 +16,7 @@ routes.get('/', basicController.get);
 //User Routes
 routes.post('/signup', userController.post);
 routes.get('/users', userController.getAll);
-
+routes.post('/login', userController.authenticate);
 //Project Routes
 routes.post('/newproject', projectController.post);
 routes.post('/newCard', cardController.post)

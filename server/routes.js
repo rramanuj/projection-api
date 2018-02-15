@@ -27,4 +27,5 @@ routes.put('/addTeamMember', projectController.addMember);
 routes.put('/editComment', commentController.editComment);
 routes.put('/editCard', cardController.editCard);
 routes.put('/removeMember', projectController.removeMember);
+
 export default routes;

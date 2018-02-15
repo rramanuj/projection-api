@@ -12,7 +12,7 @@
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
-          label="Password" v-model="password"
+          label="Password" type="password" v-model="password"
         ></v-text-field>
     <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>

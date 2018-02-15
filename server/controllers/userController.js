@@ -1,14 +1,22 @@
 import db from './../models';
 import bcrypt from 'bcrypt';
+import session from 'express-session';
+const config = require('../src/config');
 const jwt = require('jsonwebtoken');
 
 const userController = {};
 
-function jstSignUser(user){
-    const ONE_WEEK = 60 * 60 * 24 * 7
-    return jwt.sign(user, config.authentication.jwtSecret)
-}
+/*function jwtSignUser (user){
+    const ONE_WEEK = 60 * 60 * 24 * 7 //how long a session lastsf for
+    return jwt.sign(user, config.authentication.jwtSecret, {expiresIn: ONE_WEEK}); //
+}*/
 
+//ends a JSON web token to store sessions..
+function jwtSignUser (user){
+return jwt.sign({
+    data: user
+  }, 'secret', { expiresIn: 60 * 60 });
+}
 userController.post = (req,res) => {
     const {username, password} = req.body;
     console.log(req.body);
@@ -26,6 +34,7 @@ userController.post = (req,res) => {
         res.status(200).json({      //if it does it does this
             success:true,
             data: newUser,
+           
         });
     }).catch((err)=>{       //throws err if not 
           res.status(400).send ({
@@ -74,21 +83,24 @@ userController.authenticate = function (req,res) {
       if (err) {
         return 
             res.status(400).send({
-                error: "FUCK YOU"
+                error: "Incorrect username/password."
         })
       } else if (!user) {
         res.status(400).send({
-            error: "NO USER"
+            error: "Incorrect username/password."
     })
       }
       bcrypt.compare(password, user.password, function (err, result) {
         if (result === true) {
             res.status(200).send({
-                error: "LOVE YOU"
-        });
-        } else {
-            res.status(400).send({
-                error: ":9 YOU"
+                success:true,
+                user: user,
+                token: jwtSignUser(user)
+            });
+    }
+        else {
+            res.status(500).send({
+                error: "Problems with server."
         });
         }
       })
@@ -145,7 +157,6 @@ userController.authenticate = function (req,res) {
              error: 'Th3e login information was incorrect'
          })
     }
-    const userJSON = user.toJSON;
     res.send({
         user: userJSON
     }) 

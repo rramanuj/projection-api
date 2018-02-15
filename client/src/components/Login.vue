@@ -12,7 +12,7 @@
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
-          label="Password" v-model="password"
+          label="Password" type="password" v-model="password"
         ></v-text-field>
     <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>
@@ -38,14 +38,18 @@ export default {
   methods: {
     async login () { 
       try { 
-      await AuthenticationService.login({
+      const response = await AuthenticationService.login({
       username: this.email,
       password: this.password,
       //error: this.error
       })
+      console.log(response.data);
+      this.$store.dispatch('setToken', response.data.token)
+      this.$store.dispatch('setUser', response.data.user.username)
+
       console.log('login button was clicked', this.email, this.password);
     } catch (error) {
-      this.error = error .response.data;
+      this.error = error.response.data;
     }
   }},
   watch: {

@@ -1,24 +1,25 @@
 <template>
-  <div class="white elevation-2">
-    <v-toolbar flat dense class ="cyan" dark>
-      <v-toolbar-title>{{title}}</v-toolbar-title>
-    </v-toolbar>
- 
-  <div class="pl-4 pr-4 pt-2 pb-2">
-   <slot>
-     No slot content defined.
-   </slot>
-  </div>
-  </div>
+  <panel title="New Project">
+  <v-text-field label="Project Title" v-model="title"></v-text-field> 
+  <v-text-field label="Description" v-model="text"></v-text-field> 
+  </panel>
 </template>
-
 <script>
+import Panel from '@/components/Panel'
 export default {
-  props: [
-    'title'
-  ]
+  data () {
+    return {
+      "title":null,
+	    "userId":null,
+	    "text":null
+    }
+  },
+components: {
+  Panel
+}
 }
 </script>
+
 <!--scoped means only works in this vue template, not global, @click when the button
 fires a click event, it does the method associated.-->
 <style scoped>

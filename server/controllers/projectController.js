@@ -71,6 +71,32 @@ projectController.removeMember = (req,res) => {
             message: err,
         });
     });
+},
+projectController.getProjectsByUser = function (req,res) {
+    const {userId} = req.body;
+    db.Project.find({
+        _team:userId
+    }).populate({ //populate function uses the reference
+        //creator in order to populate further information such as the usernamer etc
+        path: '_creator',
+        //the -_id removes the id field from the postman api pull 
+        select: 'username createdAt -_id'}).populate({  //you can chain these functions
+        //populates must be a path & select combo. 
+        path: '_comments', //we only need the text here as the middleware
+        //we implemented automatically extracts the _user from the id 
+        select: 'text',
+        path: 'team', //we only need the text here as the middleware
+        //we implemented within the respective controller file automatically extracts the _user from the id.
+        select: 'name -_id',
+        match: {'isDeleted': false}}).then((projects) => {
+
+        return res.status(200).json({success:true, data:projects})
+        
+    }).catch((err) => {
+        return res.status(500).json({
+            message: err
+        });
+    })
 }
 
 projectController.getAll = (req,res)=>{

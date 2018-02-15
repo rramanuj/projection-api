@@ -6,7 +6,7 @@ export default {
         return API().post('signup', credentials)         //post method of Axios module. 
 
     },
-    login (credentials){
+        login (credentials){
         return API().post('login', credentials)         //post method of Axios module. 
     }
 }

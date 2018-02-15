@@ -44,9 +44,10 @@ export default {
       //error: this.error
       })
       console.log(response.data);
+      
       this.$store.dispatch('setToken', response.data.token)
-      this.$store.dispatch('setUser', response.data.user.username)
-
+      this.$store.dispatch('setUser', response.data.user)
+      this.$router.push({name: 'dashboard'})
       console.log('login button was clicked', this.email, this.password);
     } catch (error) {
       this.error = error.response.data;

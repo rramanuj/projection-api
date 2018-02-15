@@ -2,8 +2,8 @@
 <v-toolbar fixed class="cyan" dark>
     <v-toolbar-title class="mr4"><span class="home" @click="navigateTo({name:'home'})">projection.</span></v-toolbar-title>
 <v-toolbar-items>
-     <v-btn v-if="$store.state.isUserLoggedIn" flat dark @click="navigateTo({name: 'projects'})">
-       Projects
+     <v-btn v-if="$store.state.isUserLoggedIn" flat dark @click="navigateTo({name: 'dashboard'})">
+       Dashboard
         </v-btn>    
 </v-toolbar-items>
 <v-spacer></v-spacer>

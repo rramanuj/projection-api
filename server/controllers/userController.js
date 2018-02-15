@@ -97,15 +97,16 @@ userController.authenticate = function (req,res) {
                 user: user,
                 token: jwtSignUser(user)
             });
-    }
-        else {
+    } else if (!result) {
             res.status(500).send({
-                error: "Problems with server."
-        });
-        }
-      })
-    });
-},
+                error: "Incorrect username/password."
+        })
+        } else {
+        res.status(404).send({
+            error: "Problems with server."
+        })
+    }})
+})}
 /*userController.login = (req,res)=>{
     const {username,password} = req.body;
    const x = await new Promise(resolve => setTimeout(resolve, 5000));

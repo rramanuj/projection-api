@@ -10,10 +10,14 @@
       <div
       v-for="project in projects" 
       :key="project._id">
-        {{project.title}} - {{project.text}} - {{project.createdAt}}
+         <v-btn @click="navigateTo({name:'project',
+          params: 
+          {projectId: project._id}})">
+           {{project.title}}
+          </v-btn>
       </div>
     </panel>
-      </v-flex>
+    </v-flex>
    
   </v-layout>
 </template>
@@ -30,12 +34,16 @@ export default {
     return {
       projects: null
     }
-  },
+  }, 
+  methods: {
+        navigateTo(link){
+            this.$router.push(link)
+        }
+        },
     async mounted () {
     //do a request to the backend for all the projects
     //always .data, thats how ti returns data.
-    
-    this.projects = (await ProjectService.getProjectsByUser({userId:"5a7c6539ddd3abeb189e8767"})).data.data,
+    this.projects = (await ProjectService.getProjectsByUser({userId:this.$store.state.user._id})).data.data,
     console.log('projects', this.projects);
     }
 }

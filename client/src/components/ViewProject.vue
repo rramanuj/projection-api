@@ -1,4 +1,6 @@
+
 <template>
+
 <v-layout column>
    <v-flex xs12>
     <!-- <panel title="Team" button="false" v-for="cards in icebox"
@@ -12,8 +14,6 @@
 <v-layout fluid>
   <v-flex xs2.2 pt-2>
     <board v-if="icebox.length > 0" title="Ice Box" button="true" v-bind:projId=projectId>
-
-    
     </board>
     <board v-if="icebox.length == 0" title="Ice Box" button="true" v-bind:projId=projectId>
     </board>
@@ -39,7 +39,7 @@
 </v-layout>
 </template>
 <script>
-
+import draggable from 'vuedraggable'
 import CardsService from '@/services/CardsService'
 import ProjectService from '@/services/ProjectsService'
 import Board from '@/components/Board'

@@ -23,7 +23,7 @@
           :rules="[() => description.length > 0 || 'This field is required']"
           multi-line v-model="description"></v-text-field>
    <v-select
-      :items="project.data.data[0]._team.map(member => member.username)"
+      :items="project.data[0]._team.map(member => member.username)"
       v-model=owner
       label="Select A Team Member"
     ></v-select>

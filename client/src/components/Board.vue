@@ -12,19 +12,28 @@
              <v-toolbar-title>{{title}}</v-toolbar-title>
 
     </v-toolbar>
+
  
+
+
   <div class="pl-4 pr-4 pt-2 pb-2">
+      <draggable v-model="list" class="dragArea" :options="{group:'icebox'}">
    <div v-for="cards in icebox"
       :key="cards._id">
-     <v-btn @click="navigateTo({name:'project',
+     <ul @click="navigateTo({name:'project',
           params:
           {projectId: cards._id}})">
            {{cards.title}} - {{cards._owner}}
-          </v-btn>
-          
+          </ul>
+          </div>
+        </draggable>
+   </div>
    </div>
   </div>
+    
   </div>
+
+
 </v-layout>
 </template>
 
@@ -32,10 +41,17 @@
 import CardsService from '@/services/CardsService'
 import ProjectService from '@/services/ProjectsService'
 import Panel from '@/components/Panel'
+import draggable from 'vuedraggable';
+
 
 export default {
-  
+
+   components: {
+    draggable
+  },
+
   data() {
+    
     return {
       link: '',
       error: null,

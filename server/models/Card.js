@@ -12,7 +12,8 @@ const cardSchema = new Schema({
    deadline: {type: Date, required: true},
    createdAt: {type: Date, default: Date.now}, 
    isDeleted: {type: Boolean, default: false},
-   _owner: {type: Schema.ObjectId, ref: 'User'}, //references to the the action user, the person the card is assigned to..
+//    _owner: {type: Schema.ObjectId, ref: 'User'}, //references to the the action user, the person the card is assigned to..
+    _owner: {type: String, required: false}, //references to the the action user, the person the card is assigned to..
    _creator: {type: Schema.ObjectId, ref: 'User'}, //references to the user
    _project: {type: Schema.ObjectId, ref: 'Project'},  //references the project.
    _comments: [ {type: Schema.ObjectId, ref: 'Comment'} ] 

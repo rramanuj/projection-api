@@ -12,7 +12,7 @@ cardController.post= (req,res) => {
         deadline,
         userId, //token
         owner,
-        project,
+        projectId,
         comments,
     } = req.body;
 //validation is required, either text or link not both. 
@@ -22,7 +22,7 @@ cardController.post= (req,res) => {
         description,
         board,
         deadline,
-        _project: project,
+        _project: projectId,
         _owner: owner,
         _comments: comments,
         _creator: userId,       //since the property name is difeferent we need to specificy the 
@@ -41,6 +41,21 @@ cardController.post= (req,res) => {
 };
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
+//getCardsByProject
+cardController.getCardsByProject = (req,res)=>{
+    const {projectId,board} = req.body;
+    db.Card.find({_project:projectId, board:board}).then((cards) => {
+        return res.status(200).json({
+            success:true,
+            data:cards
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            message: err
+        });
+    })
+}
+
 
 cardController.editCard = (req,res) => {  
     const {_id, title, description, userId,deadline,isDeleted} = req.body;

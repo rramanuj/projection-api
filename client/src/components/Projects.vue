@@ -22,6 +22,7 @@
   </v-layout>
 </template>
 <script>
+
 import ProjectService from '@/services/ProjectsService'
 import Panel from '@/components/Panel'
 import CreateProject from '@/components/CreateProject'
@@ -33,13 +34,14 @@ export default {
   data (){
     return {
       projects: null
+
     }
   }, 
   methods: {
         navigateTo(link){
             this.$router.push(link)
         }
-        },
+    },
     async mounted () {
     //do a request to the backend for all the projects
     //always .data, thats how ti returns data.

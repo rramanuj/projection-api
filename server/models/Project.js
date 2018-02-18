@@ -20,7 +20,7 @@ const projectSchema = new Schema({
 const autoPopulateCreator = function(next) {
     this.populate ({
         path: '_team',
-        select: 'username -_id '
+        select: 'username id'
     });
 next(); 
 };

@@ -2,21 +2,19 @@
 <v-layout column>
    <v-flex xs12>
     <panel title="Team">
+      
     </panel>
    </v-flex>
 <v-layout fluid>
   <v-flex xs2.2 pt-2>
-    <panel v-if="icebox.length > 0" title="Ice Box" button="true" v-bind:projId=projectId
-      v-for="cards in icebox" 
-      :key="cards._id">
-         <v-btn @click="navigateTo({name:'project',
-          params: 
-          {projectId: cards._id}})">
-           {{cards.title}} - {{cards._owner.username}}
-          </v-btn>
+    <panel title="Ice Box" button="true" v-bind:projId=projectId
+      v-for="members in team" 
+      :key="members._id">
+    <div v-for="x in members._team" 
+      :key="x.username">
+         <v-btn> {{x.username}}</v-btn>
+    </div>
       </div>
-    </panel>
-    <panel v-if="icebox.length == 0" title="Ice Box" button="true" v-bind:projId=projectId>
     </panel>
   </v-flex>
     <v-flex xs2.2 pt-2>
@@ -51,18 +49,16 @@ export default {
   },
   data () {
     return {
-      icebox: null,
+      team: null,
       song: null,
-      projectId: this.$store.state.route.params.projectId
+      projectId: null,
     }
   },
   //what we do when it mounts
   async mounted () {
-   // const projectId = ;
-    const projectId = this.$store.state.route.params.projectId;
-   
-    this.icebox = (await CardsService.getCardsByProject({projectId:projectId,board:'Ice Box'})).data.data;
-    console.log(this.icebox)
+    const projectId = this.$store.state.route.from.params.projectId;
+    this.team = (await ProjectService.show({projectId:projectId})).data.data;
+    console.log(projectId);
     //everytime we change routes on the dev tools, the route changed is being dispatched.
     //viex-router-sync is a way to map the dispatch events when the route changes
   //  const project = await ProjectService.show({projectId:projectId})

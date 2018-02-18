@@ -33,6 +33,7 @@ projectController.post= (req,res) => {
 };
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
+
 projectController.addMember = (req,res) => {  
     const {userId, projectId} = req.body;
     
@@ -72,6 +73,22 @@ projectController.removeMember = (req,res) => {
         });
     });
 },
+//getTeam
+projectController.getTeam = function (req,res) {
+    const {projectId} = req.body;
+    db.Project.find({
+        _id:projectId}, {_team:1}
+    ).then((projects) => {
+        return res.status(200).send({
+            data:projects
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            message: err
+        });
+    })
+},
+
 projectController.getProjectsByUser = function (req,res) {
     const {userId} = req.body;
     db.Project.find({
@@ -97,8 +114,34 @@ projectController.getProjectsByUser = function (req,res) {
             message: err
         });
     })
-}
-
+},
+projectController.getById = (req,res)=>{
+    const {projectId} = req.body;
+    db.Project.find({
+        _id:projectId
+    }).populate({ //populate function uses the reference
+        //creator in order to populate further information such as the usernamer etc
+        path: '_creator',
+        //the -_id removes the id field from the postman api pull 
+        select: 'username createdAt -_id'}).populate({  //you can chain these functions
+        //populates must be a path & select combo. 
+        path: '_comments', //we only need the text here as the middleware
+        //we implemented automatically extracts the _user from the id 
+        select: 'text',
+      /*  path: '_team', //we only need the text here as the middleware
+        //we implemented within the respective controller file automatically extracts the _user from the id.
+        select: 'username _id',*/
+        match: {'isDeleted': false}}).then((projects) => {
+        return res.status(200).send({
+            data:projects
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            message: err
+        });
+    })
+},
+//
 projectController.getAll = (req,res)=>{
     db.Project.find({}).populate({ //populate function uses the reference
         //creator in order to populate further information such as the usernamer etc

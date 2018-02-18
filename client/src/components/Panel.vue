@@ -1,6 +1,13 @@
 <template>
   <div class="white elevation-2">
     <v-toolbar flat dense class ="cyan" dark>
+      <!--parameters is the only way to go when we're passing project ID to navigate methods! Props are strictly for
+      the components!-->
+      <v-btn v-if="button=='true'" outline color="indigo" small absolute middle right @click="navigateTo({name:'add-card',params: 
+          {projectId: projId}})">
+        <slot name ="action"/>
+    <v-icon>add</v-icon>
+       </v-btn>
       <v-toolbar-title>{{title}}</v-toolbar-title>
     </v-toolbar>
  
@@ -14,9 +21,23 @@
 
 <script>
 export default {
+  data() {
+    return {
+      link: '',
+      error: null
+    }
+  },
+  methods: {
+        navigateTo(link, board){
+            this.$router.push(link)
+        }
+        },
   props: [
-    'title'
-  ]
+    'title',
+    'board',
+    'projId',
+    'button'
+      ]
 }
 </script>
 <!--scoped means only works in this vue template, not global, @click when the button

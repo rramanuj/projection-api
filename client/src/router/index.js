@@ -8,6 +8,7 @@ import Login from '@/components/Login';
 import Projects from '@/components/Projects';
 import CreateProject from '@/components/CreateProject';
 import ViewProject from '@/components/ViewProject';
+import AddCard from '@/components/AddCard';
 
 Vue.use(Router);
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/newProject',
       name: 'new-project',
       component: CreateProject,
+    },
+    {
+      path: '/addCard/:projectId',
+      name: 'add-card',
+      component: AddCard,
     },
     {
       path: '/project/:projectId',

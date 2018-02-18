@@ -42,6 +42,9 @@ cardController.post= (req,res) => {
 //TODO: ACTIONS & TEAM MEMBERS. Each user must belong to a team. The users within that
 //team can then be assigned to an action within a project involving that team.
 //getCardsByProject
+
+
+///need to add is deleted false flag.
 cardController.getCardsByProject = (req,res)=>{
     const {projectId,board} = req.body;
     db.Card.find({_project:projectId, board:board}).then((cards) => {

@@ -131,7 +131,7 @@ export default {
   async mounted () {
     const projectId = this.$store.state.route.from.params.projectId;
     try {
-      this.project = (await ProjectService.getTeam({projectId:projectId}));
+      this.project = (await ProjectService.show({projectId:projectId}));
       console.log(this.project);
 
    }catch(err){

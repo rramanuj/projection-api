@@ -21,6 +21,8 @@ routes.post('/login', userController.authenticate);
 //Project Routes
 routes.post('/newProject', projectController.post);
 routes.post('/newCard', cardController.post);
+routes.put('/deleteCard', cardController.deleteCard);
+routes.post('/getCardById', cardController.getCardById) //get individual card.
 routes.get('/cards', cardController.getAll); //not single
 routes.post('/cardsByProject', cardController.getCardsByProject); //not single
 routes.post('/getProjectTeam', projectController.getTeam); //not single
@@ -30,8 +32,10 @@ routes.post('/getProjectById', projectController.getById);
 //
 routes.post('/projectsByUser', projectController.getProjectsByUser); // All projects by a user
 routes.post('/comment', commentController.post); //post comments to a project
+routes.put('/deleteComment', commentController.deleteComment);
 routes.put('/addTeamMember', projectController.addMember);
 routes.put('/editComment', commentController.editComment);
+routes.put('/editBoard', cardController.editBoard);
 routes.put('/editCard', cardController.editCard);
 routes.put('/removeMember', projectController.removeMember);
 

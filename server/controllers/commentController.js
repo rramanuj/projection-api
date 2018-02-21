@@ -23,7 +23,28 @@ commentController.editComment = (req,res) => {
             message: err,
         });
     });
+},
+commentController.deleteComment = (req,res) => {  
+    const {_id, isDeleted} = req.body;
+    console.log(req.body);
+    //pulls from our request body.
+
+    //update
+    db.Comment.findByIdAndUpdate(_id,
+        { $set: {isDeleted} }
+        ).then((newComment) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: newComment,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
 }
+
 
 commentController.post = (req,res) => {
     const {text, userId, cardId} = req.body;

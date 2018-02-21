@@ -28,42 +28,9 @@
       label="Select A Team Member"
     ></v-select>
  
-    <v-date-picker v-model="deadline"></v-date-picker>
+    <v-date-picker v-model="deadline" :landscape="landscape" :reactive="reactive"></v-date-picker>
   </div>
- 
    <v-btn @click="save" dark>Create Card</v-btn>
-
- <!-- <v-menu offset-y>
-      <v-btn color="primary" dark slot="activator"></v-btn>
-      <v-list>
-        <div v-for="members in team" :key="members._id">
-        <v-list-tile v-for="x in members._team" :key="x.username" v-model="owner">
-          <v-list-tile-title>{{ x.username }}</v-list-tile-title>
-        </v-list-tile>
-        </div>
-      </v-list>
-    </v-menu>
-  </div> 
-</div> -->
-
-   
-     <!-- <v-menu offset-y>
-      <v-btn color="primary" dark slot="activator">{{assignText}}</v-btn>
-      <v-list>
-        <div v-for="members in team" :key="members._id">
-        <v-list-tile v-for="x in members._team" :key="x.username" v-model="owner" @click="select(x.username)">
-          <v-list-tile-title>{{ x.username }}</v-list-tile-title>
-        </v-list-tile>
-        </div>
-      </v-list>
-    </v-menu>
-  </div>
-</div> -->
-     <!-- <div class="error" v-html="error"/> -->
-     <!--this says on @click, execute the method 'register' which i've defined below-->
-     <!-- <v-btn @click="" dark>Save</v-btn> -->
-       
-
   </div>
   </div>
  </v-flex>

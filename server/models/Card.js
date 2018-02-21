@@ -28,7 +28,7 @@ const autoPopulateCreator = function(next) {
         select: 'title'
     }).populate({
         path: '_comments',
-        select: 'text userId createdAt -_id',  //you can chain these functions*/;
+        select: 'text userId createdAt',  //you can chain these functions*/;
         match: {'isDeleted': false}})
 next(); 
 };

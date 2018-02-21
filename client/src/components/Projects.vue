@@ -3,9 +3,12 @@
  <v-flex xs4>
     <CreateProject/>
   </v-flex>
-
   <!--columns go up to 12 TODO: 45:12-->
   <v-flex xs8>
+    <panel button=false title="Search" class="ml-2">
+      <v-text-field label="Search by project.." v-model="search"></v-text-field>
+    </panel>
+
     <panel title="Projects" class="ml-2">
       <div
       v-for="project in projects" 
@@ -33,10 +36,30 @@ export default {
   },
   data (){
     return {
-      projects: null
+      projects: null,
+      search: ''
 
     }
   }, 
+  // watch: {
+  //   search(value){
+  //     const route = {
+  //       name: 'project'
+  //     }
+  //     if (this.search !== ''){
+  //       route.query = {
+  //         search: this.search
+  //       }
+  //     }
+  //     this.$router.push(route)
+  //   },
+  //   '$router.query.search': {
+  //     immediate: true,
+  //     handler(value){
+  //       this.search = value;
+  //     }
+  //   }
+  
   methods: {
         navigateTo(link){
             this.$router.push(link)

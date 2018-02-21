@@ -8,6 +8,7 @@
         <slot name ="action"/>
     <v-icon>add</v-icon>
        </v-btn>
+       
       <v-toolbar-title>{{title}}</v-toolbar-title>
     </v-toolbar>
  
@@ -36,7 +37,9 @@ export default {
     'title',
     'board',
     'projId',
-    'button'
+    'button',
+    'buttonAction',
+    'teamButton'
       ]
 }
 </script>

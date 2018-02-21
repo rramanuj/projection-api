@@ -1,33 +1,50 @@
 <template>
 <v-layout container>
   <div class="white elevation-2">
-    <v-toolbar flat dense class ="cyan" dark>
+    <v-toolbar flat dense class ="grey" light>
       <!--parameters is the only way to go when we're passing project ID to navigate methods! Props are strictly for
       the components!-->
-      <v-btn v-if="button=='true'" outline color="indigo" small absolute middle right @click="navigateTo({name:'add-card',params: 
-          {projectId: projId}})">
+      <v-btn v-if="button=='true'" outline color="white" small absolute middle right @click="navigateTo({name:'add-card',params: 
+          {projectId: projId, board:title}})">
         <slot name ="action"/>
     <v-icon>add</v-icon>
        </v-btn>
              <v-toolbar-title>{{title}}</v-toolbar-title>
-
     </v-toolbar>
 
  
-
-
   <div class="pl-4 pr-4 pt-2 pb-2">
-      <draggable v-model="list" class="dragArea" :options="{group:'icebox'}">
-   <div v-for="cards in icebox"
-      :key="cards._id">
-     <ul @click="navigateTo({name:'project',
-          params:
-          {projectId: cards._id}})">
-           {{cards.title}} - {{cards._owner}}
-          </ul>
-          </div>
+      <draggable @update="onUpdate()" v-model="board"  :list=board :options="{group:'board'}"  @start="drag=true" 
+                @end="drag=false" :drop="onDrop" :move="onMove">
+     <!-- <div v-for="cards in board"
+      :key="cards._id"> -->    
+        <v-list-tile v-for="cards in board" :key="cards._id" @click="navigateTo({name:'card',
+          params: {cardId: cards._id, projectId:projectId}})" color="blue" >         
+            <v-list-tile-content>
+              <v-list-tile-title>{{ cards.title }}</v-list-tile-title>
+              <v-list-tile-sub-title>{{ cards._owner }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-btn icon ripple>
+                <v-icon color="grey lighten-1">info</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
         </draggable>
+
+
    </div>
+
+        <div v-if="empty==true" class="pl-4 pr-4 pt-2 pb-2">
+      <draggable @update="onUpdate()" v-model="board"  :list=board :options="{group:'board'}"  @start="drag=true" 
+                @end="drag=false" :drop="onDrop" :move="onMove">
+     <ul>
+       {{tempCard}}
+          </ul>
+          </draggable>
+
+          </div>
+  
    </div>
   </div>
     
@@ -49,39 +66,100 @@ export default {
    components: {
     draggable
   },
-
+//TODO: DELETE BLANKS.
   data() {
-    
     return {
       link: '',
       error: null,
-      icebox: null,
+      board: null,
+      res: null,
+      ghost: null,
+      var: null,
+      staged: null,
       song: null,
-      projectId: this.$store.state.route.params.projectId
-    }
+      tempCard: null,
+      update: null,
+      projectId: this.$store.state.route.params.projectId,
+      dragging: false,
+    futureIndex:null,
+    future_index: "START",
+      }
+    
   },
   methods: {
+      onMove: function(event, oEvent) {
+      var originBoard = (event.draggedContext.element);
+      var destinationBoard = (event.relatedContext.element);
+
+      console.log(originBoard.board);
+      console.log(originBoard._id);
+      console.log(destinationBoard.board);
+
+    if (originBoard.board != destinationBoard.board) {
+      try{
+        CardsService.updateBoard({_id:originBoard._id, board:destinationBoard.board});
+        }catch(err) {
+          console.log(err)
+        }
+       
+       
+    }
+     }, //TODO: write the update code here
+    onDrop: function(event, oEvent) {
+      console.log("French");
+    },
+     getComponentData() {
+      return {
+        on: {
+          change: this.handleChange,
+          input: this.inputChanged
+        },
+        props: {
+          value: this.activeNames
+        }
+      }},
         navigateTo(link, board){
             this.$router.push(link)
         }
         },
+         computed: {
+    // a computed getter
+    startGhost: function () {
+      // `this` points to the vm instance
+      this.ghost.board == this.title;
+      this.ghost.title == " ";
+      return this.ghost;
+    }
+         },
   props: [
     'title',
-    'board',
     'projId',
-    'button'
+    'button',
+    'empty'
       ],
       async mounted () {
    // const projectId = ;
     const projectId = this.$store.state.route.params.projectId;
 
-    this.icebox = (await CardsService.getCardsByProject({projectId:projectId,board:'Ice Box'})).data.data;
-    console.log(this.icebox)
+    this.board = (await CardsService.getCardsByProject({projectId:projectId,board:this.title})).data.data;
+
+    this.tempCard = (await ProjectService.postCard({
+      projectId:projectId,
+      title: " ",
+      description: " ",
+      deadline: Date(),
+      userId: this.$store.state.user._id,
+      owner: " ",
+      board: this.title,
+      })).data.data
+      }}
+
     //everytime we change routes on the dev tools, the route changed is being dispatched.
     //viex-router-sync is a way to map the dispatch events when the route changes
   //  const project = await ProjectService.show({projectId:projectId})
-  }
-}
+    
+  
+
 
 </script>
 <!--scoped means only works in this vue template, not global, @click when the button

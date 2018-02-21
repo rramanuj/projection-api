@@ -5,20 +5,18 @@
   <div class="white elevation-2">
     <v-toolbar flat dense class ="cyan" dark>
        <v-toolbar-side-icon @click="back()">back</v-toolbar-side-icon>
-    <v-toolbar-title>Add Card</v-toolbar-title>
+    <v-toolbar-title>Add Member</v-toolbar-title>
     </v-toolbar>
     <div>
   <!-- <span v-for="n in team" v-bind:key="n._id" items.push(n._id)</span> -->
 </div>
-  
-  <div class="pl-4 pr-4 pt-2 pb-2">
-      <v-text-field label="Title" v-model="title"          
-      :rules="[() => title.length > 0 || 'This field is required']"
-></v-text-field>
-   <!-- <input type ="email" name ="email" placeholder="email" v-model="email"/>-->
-    <!--v model searches the input data and binds it to a variable below. -->
-    <br>
-     <v-text-field name="input-7-1"
+
+  <v-flex xs6  offset-xs3>
+    <panel button=false title="Search" class="ml-2">
+      <v-text-field label="Search by username.." v-model="search"></v-text-field>
+    </panel>
+  </v-flex>
+     <!-- <v-text-field name="input-7-1"
           label="Description"
           :rules="[() => description.length > 0 || 'This field is required']"
           multi-line v-model="description"></v-text-field>
@@ -26,43 +24,12 @@
       :items="project.data.data[0]._team.map(member => member.username)"
       v-model=owner
       label="Select A Team Member"
-    ></v-select>
- 
-    <v-date-picker v-model="deadline"></v-date-picker>
-  </div>
- 
-   <v-btn @click="save" dark>Create Card</v-btn>
+    ></v-select> -->
 
- <!-- <v-menu offset-y>
-      <v-btn color="primary" dark slot="activator"></v-btn>
-      <v-list>
-        <div v-for="members in team" :key="members._id">
-        <v-list-tile v-for="x in members._team" :key="x.username" v-model="owner">
-          <v-list-tile-title>{{ x.username }}</v-list-tile-title>
-        </v-list-tile>
-        </div>
-      </v-list>
-    </v-menu>
-  </div> 
-</div> -->
+ 
+   <v-btn @click="save" dark>Add To Team</v-btn>
 
-   
-     <!-- <v-menu offset-y>
-      <v-btn color="primary" dark slot="activator">{{assignText}}</v-btn>
-      <v-list>
-        <div v-for="members in team" :key="members._id">
-        <v-list-tile v-for="x in members._team" :key="x.username" v-model="owner" @click="select(x.username)">
-          <v-list-tile-title>{{ x.username }}</v-list-tile-title>
-        </v-list-tile>
-        </div>
-      </v-list>
-    </v-menu>
-  </div>
-</div> -->
-     <!-- <div class="error" v-html="error"/> -->
-     <!--this says on @click, execute the method 'register' which i've defined below-->
-     <!-- <v-btn @click="" dark>Save</v-btn> -->
-       
+
 
   </div>
   </div>
@@ -86,23 +53,6 @@ export default {
       deadline: null
             }
     },
-    // created (){
-    //   //  this.loading = true;
-    //     // Fetch the comments 
-    //     ProjectService.getTeam({projectId:projectId}).then((response) =>{ 
-    //       this.yellow = response.data;
-    //     }
-    //     this.$http.get('http://localhost:3434').then((response) => {
-    //         // success callback
-    //         this.comments = response.data;
-    //         this.loading = false;
-    //     }, (response) => {
-    //         // error callback
-    //         console.error(response);
-    //         this.loading = false;
-    //     })
-    //     },
-  
     methods: {
       back(){
             this.$router.push({name:'project',params: 

@@ -1,8 +1,6 @@
 import db from './../models';
 const cardController = {};
 
-
-
 //this is going to be a card
 cardController.post= (req,res) => {
     const {
@@ -43,11 +41,21 @@ cardController.post= (req,res) => {
 //team can then be assigned to an action within a project involving that team.
 //getCardsByProject
 
-
-///need to add is deleted false flag.
-cardController.getCardsByProject = (req,res)=>{
-    const {projectId,board} = req.body;
-    db.Card.find({_project:projectId, board:board}).then((cards) => {
+cardController.getCardById = (req,res)=>{
+    const {cardId} = req.body;
+    db.Card.find({_id:cardId}).populate({ //populate function uses the reference
+        //creator in order to populate further information such as the usernamer etc
+        path: '_creator',
+        //the -_id removes the id field from the postman api pull 
+        select: 'username createdAt'}).populate({  //you can chain these functions
+        //populates must be a path & select combo. 
+        path: '_comments', //we only need the text here as the middleware
+        //we implemented automatically extracts the _user from the id 
+        select: 'text',
+      /*  path: '_team', //we only need the text here as the middleware
+        //we implemented within the respective controller file automatically extracts the _user from the id.
+        select: 'username _id',*/
+        match: {'isDeleted': false}}).then((cards) => {
         return res.status(200).json({
             success:true,
             data:cards
@@ -57,16 +65,83 @@ cardController.getCardsByProject = (req,res)=>{
             message: err
         });
     })
-}
+},
 
+
+///need to add is deleted false flag.
+cardController.getCardsByProject = (req,res)=>{
+    const {projectId,board} = req.body;
+    db.Card.find({_project:projectId, board:board, isDeleted:false}).populate({ //populate function uses the reference
+        //creator in order to populate further information such as the usernamer etc
+        path: '_creator',
+        //the -_id removes the id field from the postman api pull 
+        select: 'username createdAt -_id'}).populate({  //you can chain these functions
+        //populates must be a path & select combo. 
+        path: '_comments', //we only need the text here as the middleware
+        //we implemented automatically extracts the _user from the id 
+        select: 'text',
+      /*  path: '_team', //we only need the text here as the middleware
+        //we implemented within the respective controller file automatically extracts the _user from the id.
+        select: 'username _id',*/
+        match: {'isDeleted': false}}).then((cards) => {
+        return res.status(200).json({
+            success:true,
+            data:cards
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            message: err
+        });
+    })
+},
+
+cardController.editBoard = (req,res) => {  
+    const {_id, board} = req.body;
+    //pulls from our request body.
+    //update
+    
+    db.Card.findByIdAndUpdate({_id,"board":{$exists:true}},
+        { $set: {board} }
+        ).then((updatedCard) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: updatedCard,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+},
+
+cardController.deleteCard = (req,res) => {  
+    const {_id, isDeleted} = req.body;
+    //pulls from our request body.
+    //update
+    
+    db.Card.findByIdAndUpdate({_id,"board":{$exists:true}},
+        { $set: {isDeleted} }
+        ).then((updatedCard) => {
+        res.status(200).json({
+            success: true,
+            data: true,
+            data: updatedCard,
+        });
+    }).catch((err)=>{       //throws err if not 
+        res.status(500).json ({
+            message: err,
+        });
+    });
+},
 
 cardController.editCard = (req,res) => {  
-    const {_id, title, description, userId,deadline,isDeleted} = req.body;
+    const {_id, title, description,owner,deadline} = req.body;
     console.log(req.body);
     //pulls from our request body.
     //update
-    db.Card.findByIdAndUpdate({_id,"title description ,userId,deadline,isDeleted":{$exists:true}},
-        { $set: {title, description,userId,deadline,isDeleted} }
+    db.Card.findByIdAndUpdate({_id,"title,description,owner,deadline":{$exists:true}},
+        { $set: {title,description,_owner:owner,deadline} }
         ).then((updatedCard) => {
         res.status(200).json({
             success: true,

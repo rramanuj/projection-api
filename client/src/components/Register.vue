@@ -7,8 +7,8 @@
     </v-toolbar>
  
   <div class="pl-4 pr-4 pt-2 pb-2">
-      <v-text-field label="Username" v-model="email"></v-text-field>
-   <!-- <input type ="email" name ="email" placeholder="email" v-model="email"/>-->
+      <v-text-field label="Username" v-model="username"></v-text-field>
+   <!-- <input type ="username" name ="username" placeholder="username" v-model="username"/>-->
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
@@ -29,7 +29,7 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
       error: null
     }
@@ -41,22 +41,22 @@ export default {
       
       try { 
       await AuthenticationService.register({
-      username: this.email,
+      username: this.username,
       password: this.password,
       //error: this.error
       })
-      console.log('register button was clicked', this.email, this.password);
+      console.log('register button was clicked', this.username, this.password);
     } catch (error) {
       this.error = error .response.data;
     }
   }},
   watch: {
-    email(value) {
-      console.log('email has changed', value)
+    username(value) {
+      console.log('username has changed', value)
     },
     mounted () {
       setTimeout(() => {
-        this.email = 'hello world'
+        this.username = 'hello world'
       }, 1000)
     }
   }
@@ -72,5 +72,5 @@ fires a click event, it does the method associated.-->
 
 
 </style>   
-  <!-- calls the end point, pass it email and password, wait for a response, and opnce we get
+  <!-- calls the end point, pass it username and password, wait for a response, and opnce we get
 the response we print out the data.-->

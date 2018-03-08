@@ -5,7 +5,7 @@ export default {
         getCardsByProject (projectId, board) {
             return API().post('CardsByProject', projectId, board);          //post method of Axios module. 
     },
-    updateBoard (_id, board) {
+          updateBoard (_id, board) {
         return API().put('editBoard', _id, board);          //post method of Axios module. 
         },
         getCardById (cardId) {

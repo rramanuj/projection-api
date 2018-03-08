@@ -67,6 +67,16 @@ cardController.getCardById = (req,res)=>{
     })
 },
 
+//try {
+  
+
+cardController.garbageClean = (req,res)=>{
+    try{
+    db.Card.deleteMany( { "title" : null} );
+} catch (e) {
+   print (e);
+}
+    },
 
 ///need to add is deleted false flag.
 cardController.getCardsByProject = (req,res)=>{

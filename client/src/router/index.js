@@ -5,13 +5,13 @@ import Router from 'vue-router';
 import HelloWorld from '@/components/HelloWorld';
 import Register from '@/components/Register';
 import Login from '@/components/Login';
-import Projects from '@/components/Projects';
-import CreateProject from '@/components/CreateProject';
-import ViewProject from '@/components/ViewProject';
-import AddCard from '@/components/AddCard';
-import ViewCard from '@/components/ViewCard';
-import AddComment from '@/components/AddComment';
-import AddMember from '@/components/AddMember';
+import Projects from '@/components/Projects/Index';
+import CreateProject from '@/components/Projects/CreateProject';
+import ViewProject from '@/components/Projects/ViewProject';
+import AddCard from '@/components/Cards/AddCard';
+import ViewCard from '@/components/Cards/ViewCard';
+import AddComment from '@/components/Cards/AddComment';
+import AddMember from '@/components/Projects/Team/AddMember';
 
 Vue.use(Router);
 
@@ -21,6 +21,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: HelloWorld,
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: AddMember,
     },
     {
       path: '/register',
@@ -71,6 +81,10 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/*',
+      redirect: 'home'
     },
   ],
 });

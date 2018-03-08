@@ -7,12 +7,12 @@
     </v-toolbar>
  
   <div class="pl-4 pr-4 pt-2 pb-2">
-      <v-text-field label="Username" v-model="email"></v-text-field>
-   <!-- <input type ="email" name ="email" placeholder="email" v-model="email"/>-->
+      <v-text-field label="Username"  :rules="[() => username.length > 5 || 'This field is required']" v-model="username"></v-text-field>
+   <!-- <input type ="username" name ="username" placeholder="username" v-model="username"/>-->
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
-          label="Password" type="password" v-model="password"
+          label="Password" type="password" :rules="[() => password.length > 5 || 'This field is required']" v-model="password"
         ></v-text-field>
     <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>
@@ -29,7 +29,7 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
       error: null
     }
@@ -39,7 +39,7 @@ export default {
     async login () { 
       try { 
       const response = await AuthenticationService.login({
-      username: this.email,
+      username: this.username,
       password: this.password,
       //error: this.error
       })
@@ -48,14 +48,14 @@ export default {
       this.$store.dispatch('setToken', response.data.token)
       this.$store.dispatch('setUser', response.data.user)
       this.$router.push({name: 'dashboard'})
-      console.log('login button was clicked', this.email, this.password);
+      console.log('login button was clicked', this.username, this.password);
     } catch (error) {
-      this.error = error.response.data;
+      this.error = "Invalid Login Details"
     }
   }},
   watch: {
-    email(value) {
-      console.log('email has changed', value)
+    username(value) {
+      console.log('username has changed', value)
     }
   }
 }
@@ -65,10 +65,11 @@ export default {
 fires a click event, it does the method associated.-->
 <style scoped>
 .error {
-  color:red; 
+  color:red;
+  text-decoration-color:white; 
 }
 
 
 </style>   
-  <!-- calls the end point, pass it email and password, wait for a response, and opnce we get
+  <!-- calls the end point, pass it username and password, wait for a response, and opnce we get
 the response we print out the data.-->

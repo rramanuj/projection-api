@@ -34,7 +34,7 @@ userSchema.pre('save', function (next) {
       next();
     })
   });
-//TODO: write some encrpytion for password.
+
 //puts work before you save data you can add methods
 
 const User = mongoose.model('User', userSchema);

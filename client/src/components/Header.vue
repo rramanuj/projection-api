@@ -4,7 +4,10 @@
 <v-toolbar-items>
      <v-btn v-if="$store.state.isUserLoggedIn" flat dark @click="navigateTo({name: 'dashboard'})">
        Dashboard
-        </v-btn>    
+        </v-btn>
+        <v-btn v-if="$store.state.isUserLoggedIn" flat dark @click="deleteAccount()">
+       Delete Account
+        </v-btn>  
 </v-toolbar-items>
 <v-spacer></v-spacer>
 
@@ -13,6 +16,7 @@
  <v-btn v-if="!$store.state.isUserLoggedIn" flat dark @click="navigateTo({name:'register'})">
        Sign Up
         </v-btn>
+
 <v-btn v-if="!$store.state.isUserLoggedIn" flat dark @click="navigateTo({name:'login'})">
        Login
         </v-btn>
@@ -25,10 +29,28 @@
 
 </template>
 <script>
+import AuthenticationService from '@/services/AuthenticationService'
+
 export default {
+    
     methods: {
         navigateTo(link){
             this.$router.push(link)
+        },
+        async deleteAccount(){
+        var r = confirm("Are you sure you want to delete your account?");
+        if (r == true) 
+        {
+        //delete account
+          try {
+              (await AuthenticationService.delete({_id:this.$store.state.user._id,isDeleted:true}))
+          }catch (err){
+              console.log(err);
+          }
+        }
+            this.$store.dispatch('setToken', null)
+            this.$store.dispatch('setUser', null)
+            this.$router.push({name: 'home'})
         },
         logout () {
             this.$store.dispatch('setToken', null)

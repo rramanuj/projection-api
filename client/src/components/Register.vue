@@ -5,14 +5,13 @@
     <v-toolbar flat dense class ="cyan" dark>
       <v-toolbar-title>Register</v-toolbar-title>
     </v-toolbar>
- 
   <div class="pl-4 pr-4 pt-2 pb-2">
-      <v-text-field label="Username" v-model="username"></v-text-field>
+      <v-text-field label="Username"  :rules="[() => username.length > 4 || 'Username must be minimum 5 characters.']" v-model="username"></v-text-field>
    <!-- <input type ="username" name ="username" placeholder="username" v-model="username"/>-->
     <!--v model searches the input data and binds it to a variable below. -->
     <br>
       <v-text-field
-          label="Password" type="password" v-model="password"
+          label="Password" type="password" :rules="[() => password.length > 7 || 'Passwords must be minimum 8 characters.']" v-model="password"
         ></v-text-field>
     <!-- <input type ="password" name ="password" placeholder="password" v-model="password"/>-->
      <br>
@@ -29,36 +28,29 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      username: null,
+      password: null,
       error: null
     }
   },
-  
   methods: {
-    
     async register () {
-      
       try { 
       await AuthenticationService.register({
       username: this.username,
-      password: this.password,
+      password: this.password
       //error: this.error
       })
-      console.log('register button was clicked', this.username, this.password);
+        confirm("Account created successfully. Please log in to start.");
+
     } catch (error) {
-      this.error = error .response.data;
+      confirm("Please fill in all fields.");
     }
   }},
   watch: {
     username(value) {
       console.log('username has changed', value)
     },
-    mounted () {
-      setTimeout(() => {
-        this.username = 'hello world'
-      }, 1000)
-    }
   }
 }
 

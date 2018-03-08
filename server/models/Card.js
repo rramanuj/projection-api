@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+//Used the following video to help set the back end API using mongoose:
+//https://www.youtube.com/watch?v=L5Nle1VXYnw
 //defines everything that goes inside a collection
 const { Schema } = mongoose;
 mongoose.Promise = global.Promise;

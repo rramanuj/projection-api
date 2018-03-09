@@ -1,7 +1,7 @@
 <template>
   <panel title="New Project">
-  <v-text-field label="Project Title" :rules="[() => this.length > 0 || 'You must contain a title!']" v-model="project.title"></v-text-field> 
-  <v-text-field label="Description" :rules="[() => this.length > 0 || 'You must contain a description.']" v-model="project.text"></v-text-field> 
+  <v-text-field label="Title" :rules="[() => project.title.length > 0 || 'You must contain a title!']" v-model="project.title"></v-text-field> 
+  <v-text-field label="Description" :rules="[() => project.text.length > 0 || 'You must contain a description.']" v-model="project.text"></v-text-field> 
   <div class ="error" v-if="error"> <!--only display if defined-->
     {{error}}
   </div>

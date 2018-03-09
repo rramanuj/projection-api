@@ -24,31 +24,31 @@
    </v-flex>
    
 <v-layout fluid>
-  <v-flex xs2.2 pt-2>
+  <v-flex xs2.1 pt-2>
     <board v-if="icebox.length > 0" title="Ice Box" button="true" v-bind:projId=projectId>
     </board>
     <board v-if="icebox.length == 0" title="Ice Box" empty="true" button="true" v-bind:projId=projectId>
     </board>
   </v-flex>
-    <v-flex xs2.2 pt-2>
+    <v-flex xs2.1 pt-2>
     <board v-if="staged.length > 0" title="Staged" button="true" v-bind:projId=projectId>
     </board>
     <board v-if="staged.length == 0" title="Staged" button="true" empty="true"  v-bind:projId=projectId>
     </board>
      </v-flex>
-    <v-flex xs2.2 pt-2>
+    <v-flex xs2.1 pt-2>
     <board v-if="inProgress.length > 0" title="In Progress" button="true" v-bind:projId=projectId>
     </board>
     <board v-if="inProgress.length == 0" title="In Progress" button="true" empty="true" v-bind:projId=projectId>
     </board>
      </v-flex>
-    <v-flex xs2.2 pt-2>
+    <v-flex xs2.1 pt-2>
     <board v-if="testing.length > 0" title="Testing" button="true" v-bind:projId=projectId>
     </board>
     <board v-if="testing.length == 0" title="Testing" button="true" empty="true"  v-bind:projId=projectId>
     </board>
      </v-flex>
-    <v-flex xs2.2 pt-2>
+    <v-flex xs2.1 pt-2>
     <board v-if="complete.length > 0" title="Complete" button="true" v-bind:projId=projectId>
     </board>
     <board v-if="complete.length == 0" title="Complete" button="true" empty="true" v-bind:projId=projectId>
